@@ -1,4 +1,4 @@
-  // NAV scroll
+// NAV scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     // Ativa o efeito após 20px de rolagem para uma transição mais rápida e fluida
@@ -9,22 +9,28 @@
     }
   });
 
+  
   // Mobile menu
   const mobileBtn = document.getElementById('mobileMenuBtn');
   const navLinks = document.getElementById('navLinks');
-  mobileBtn.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('mobile-open');
-    document.body.classList.toggle('menu-open', isOpen);
+  
+  const toggleMenu = (forceClose = false) => {
+    const isOpen = forceClose ? false : navLinks.classList.toggle('mobile-open');
+    if (forceClose) navLinks.classList.remove('mobile-open');
     
-    // Ajustar ícone do menu (opcional, mas melhora a UX)
+    document.body.classList.toggle('menu-open', isOpen);
     mobileBtn.classList.toggle('active', isOpen);
+  };
+
+  mobileBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleMenu();
   });
   
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      navLinks.classList.remove('mobile-open');
-      document.body.classList.remove('menu-open');
-      mobileBtn.classList.remove('active');
+      // Pequeno delay para permitir que o clique seja processado antes de fechar o menu com animação
+      setTimeout(() => toggleMenu(true), 150);
     });
   });
 

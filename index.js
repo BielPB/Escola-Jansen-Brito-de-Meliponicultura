@@ -1,4 +1,4 @@
- // NAV scroll
+// NAV scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     // Ativa o efeito após 20px de rolagem para uma transição mais rápida e fluida
@@ -11,37 +11,56 @@
 
   
   
-  // Mobile menu
+  
+  
+  // Mobile menu logic
   const mobileBtn = document.getElementById('mobileMenuBtn');
   const navLinks = document.getElementById('navLinks');
-  let scrollPosition = 0;
   
-  const toggleMenu = (forceClose = false) => {
-    const isOpen = forceClose ? false : navLinks.classList.toggle('mobile-open');
-    
-    if (isOpen) {
-      scrollPosition = window.pageYOffset;
-      document.body.style.top = `-${scrollPosition}px`;
-      document.body.classList.add('menu-open');
-    } else {
-      document.body.classList.remove('menu-open');
-      document.body.style.top = '';
-      window.scrollTo(0, scrollPosition);
-    }
-    
-    mobileBtn.classList.toggle('active', isOpen);
-  };
+  function closeMenu() {
+    navLinks.classList.remove('mobile-open');
+    document.body.classList.remove('menu-open');
+    mobileBtn.classList.remove('active');
+  }
 
+  function openMenu() {
+    navLinks.classList.add('mobile-open');
+    document.body.classList.add('menu-open');
+    mobileBtn.classList.add('active');
+  }
 
   mobileBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    toggleMenu();
+    if (navLinks.classList.contains('mobile-open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
   
+  // Interceptação de cliques em links da navbar
   navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      // Pequeno delay para permitir que o clique seja processado antes de fechar o menu com animação
-      setTimeout(() => toggleMenu(true), 150);
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      
+      // 1. Fecha o menu imediatamente (independente de ser mobile ou desktop)
+      closeMenu();
+      
+      // 2. Se for link de âncora interna
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          // Pequeno delay para o navegador processar a remoção do 'overflow: hidden' do body
+          setTimeout(() => {
+            const offsetTop = target.offsetTop - 80; // Compensação da altura da navbar
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }, 50);
+        }
+      }
     });
   });
 

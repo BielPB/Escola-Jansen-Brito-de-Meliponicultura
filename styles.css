@@ -1,4 +1,4 @@
- /* ============ TRAVELING-LIGHT BORDER — @property ============ */
+/* ============ TRAVELING-LIGHT BORDER — @property ============ */
     @property --btn-angle {
       syntax: '<angle>';
       inherits: false;
@@ -1997,14 +1997,16 @@
       
       
       
+      
       .nav-links.mobile-open {
         display: flex !important;
         flex-direction: column !important;
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
+        width: 100% !important;
+        height: 100dvh !important; /* Altura dinâmica para mobile */
+        height: 100vh !important; /* Fallback */
         background: rgba(10, 10, 10, 0.98) !important;
         align-items: center !important;
         justify-content: center !important;
@@ -2016,9 +2018,9 @@
         -webkit-backdrop-filter: blur(15px) !important;
         will-change: transform, opacity;
         animation: fadeInNav 0.3s ease-out forwards !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch;
+        overflow: hidden !important; /* Evita scroll interno no menu se não necessário */
       }
+
 
 
 
@@ -2394,14 +2396,16 @@
       
       
       
+      
       .nav-links.mobile-open {
         display: flex !important;
         flex-direction: column !important;
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
+        width: 100% !important;
+        height: 100dvh !important; /* Altura dinâmica para mobile */
+        height: 100vh !important; /* Fallback */
         background: rgba(10, 10, 10, 0.98) !important;
         align-items: center !important;
         justify-content: center !important;
@@ -2413,9 +2417,9 @@
         -webkit-backdrop-filter: blur(15px) !important;
         will-change: transform, opacity;
         animation: fadeInNav 0.3s ease-out forwards !important;
-        overflow-y: auto !important;
-        -webkit-overflow-scrolling: touch;
+        overflow: hidden !important; /* Evita scroll interno no menu se não necessário */
       }
+
 
 
 
@@ -2438,11 +2442,16 @@
       
       
       
+      
       body.menu-open {
         overflow: hidden !important;
+        height: 100dvh !important;
+        height: 100vh !important;
+        width: 100% !important;
+        position: fixed !important; /* Garante que o fundo não role */
         touch-action: none;
-        -webkit-overflow-scrolling: none;
       }
+
 
     
     

@@ -1,4 +1,4 @@
-// NAV scroll
+ // NAV scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     // Ativa o efeito após 20px de rolagem para uma transição mais rápida e fluida
@@ -10,17 +10,28 @@
   });
 
   
+  
   // Mobile menu
   const mobileBtn = document.getElementById('mobileMenuBtn');
   const navLinks = document.getElementById('navLinks');
+  let scrollPosition = 0;
   
   const toggleMenu = (forceClose = false) => {
     const isOpen = forceClose ? false : navLinks.classList.toggle('mobile-open');
-    if (forceClose) navLinks.classList.remove('mobile-open');
     
-    document.body.classList.toggle('menu-open', isOpen);
+    if (isOpen) {
+      scrollPosition = window.pageYOffset;
+      document.body.style.top = `-${scrollPosition}px`;
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollPosition);
+    }
+    
     mobileBtn.classList.toggle('active', isOpen);
   };
+
 
   mobileBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -33,7 +44,7 @@
       setTimeout(() => toggleMenu(true), 150);
     });
   });
-  
+
   // Scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
   const revealObserver = new IntersectionObserver((entries) => {

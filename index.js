@@ -33,7 +33,7 @@
       setTimeout(() => toggleMenu(true), 150);
     });
   });
-
+  
   // Scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
   const revealObserver = new IntersectionObserver((entries) => {
@@ -65,7 +65,22 @@
     window.open(url, '_blank');
   }
 
+  
+  // Gallery touch effect for mobile
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  galleryItems.forEach(item => {
+    item.addEventListener('touchstart', function() {
+      // Remove active-touch de todos os outros itens
+      galleryItems.forEach(i => {
+        if (i !== item) i.classList.remove('active-touch');
+      });
+      // Alterna no item atual
+      this.classList.toggle('active-touch');
+    }, {passive: true});
+  });
+
   // Smooth parallax on hero orbs
+
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     const orb1 = document.querySelector('.hero-orb-1');
